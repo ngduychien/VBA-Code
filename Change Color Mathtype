@@ -1,0 +1,52 @@
+Sub ChangeColorMT()
+mau = "$\color{blue}"
+Application.ScreenUpdating = False
+Selection.WholeStory
+Application.Run MacroName:="MTCommand_TeXToggle"
+
+ With Selection.Find
+        .ClearFormatting
+        .text = "($)(*$)"
+        .Replacement.text = "#$" & "\2"
+        .Replacement.ClearFormatting
+        .Wrap = wdFindContinue
+        .MatchCase = True
+        .MatchWildcards = True
+        .Execute Replace:=wdReplaceAll, Forward:=True
+    End With
+ With Selection.Find
+        .ClearFormatting
+        .text = "#$"
+        .Replacement.text = mau
+        .Replacement.ClearFormatting
+        .Wrap = wdFindContinue
+        .MatchCase = True
+        .MatchWildcards = False
+        .Execute Replace:=wdReplaceAll, Forward:=True
+    End With
+
+ With Selection.Find
+        .ClearFormatting
+        .text = "\["
+        .Replacement.text = mau
+        .Replacement.ClearFormatting
+        .Wrap = wdFindContinue
+        .MatchCase = True
+        .MatchWildcards = False
+        .Execute Replace:=wdReplaceAll, Forward:=True
+    End With
+ With Selection.Find
+        .ClearFormatting
+        .text = "\]"
+        .Replacement.text = "$"
+        .Replacement.ClearFormatting
+        .Wrap = wdFindContinue
+        .MatchCase = True
+        .MatchWildcards = False
+        .Execute Replace:=wdReplaceAll, Forward:=True
+    End With
+Selection.WholeStory
+Application.Run MacroName:="MTCommand_TeXToggle"
+Selection.HomeKey Unit:=wdStory
+Application.ScreenUpdating = True
+End Sub
